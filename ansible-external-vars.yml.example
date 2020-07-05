@@ -1,0 +1,8 @@
+---
+aws_cluster_name: flooper
+aws_kube_master_num: 1
+aws_etcd_num: 1
+aws_kube_worker_num: 1
+kubespray_version: 2.12.7
+kubespray_install_dir: /home/centos
+terraform_version: 0.12.28

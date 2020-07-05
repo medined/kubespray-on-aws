@@ -12,4 +12,4 @@ time python3 \
   -i "$IP_ADDRESS," \
   --private-key $PKI_PRIVATE_PEM \
   -u $SSH_USER \
-  playbook.02-kubespray.yml | tee log-playbook.02-kubespray.log
+  playbook.03-kubespray.yml | tee log-playbook.03-kubespray.log

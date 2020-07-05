@@ -1,5 +1,6 @@
 .terraform
 .vscode
+ansible-external-vars.yml
 inventory
 terraform.tfstate
 terraform.tfstate.backup

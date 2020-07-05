@@ -2,9 +2,8 @@
 - hosts: all
   gather_facts: false
 
-  vars:
-    kubespray_version: 2.12.7
-    kubespray_install_dir: /home/centos
+  vars_files:
+    - external_vars.yml
 
   tasks:
 
@@ -28,7 +27,7 @@
     - name: Run cluster playbook to install kubernetes
       shell: |
         python3 \
-          $(which ansible-playbook)
+          $(which ansible-playbook) \
             --become \
             --become-user=root \
             -e ansible_user=centos \

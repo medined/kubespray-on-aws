@@ -2,11 +2,17 @@
 
 This project uses an AWS jump box in order to provision a Kubernetes cluster using KubeSpray. Terraform is used to spin up a CentOS server (jump box), then that server is used to provision the cluster nodes and install kubernetes.
 
+See https://medined.github.io/centos/terraform/ansible/kubernetes/kubespray/2020/06/28/provision-centos-kubernetes-cluster-on-aws.html for a manual process.
+
 A note of caution. The cluster state is stored on the jump box. So don't terminate it before destroying the cluster. You can use `./run-99-destroy-playbook.sh`. 
 
 This work is being done at the request of the Enterprise Container Working Group (ECWG) of the Office of Information and Technology (OIT - https://www.oit.va.gov/) at the Department of Veteran Affairs.
 
-## Current Failure
+## Links
+
+* https://github.com/kubernetes-sigs/kubespray
+
+## Failure
 
 The project is currently failing because of the following issue when the `playbook-02-kubespray.yml` playbook is run.
 
@@ -58,7 +64,8 @@ terraform apply --auto-approve
 ## KubeSpray
 
 ```bash
-./run-02-kubespray-playbook.sh
+./run-02-terraform-playbook.sh
+./run-03-kubespray-playbook.sh
 ```
 
 **It's during this step that you'll see the hostvars error.**

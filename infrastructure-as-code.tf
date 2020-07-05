@@ -31,7 +31,7 @@ resource "aws_instance" "centos" {
   provisioner "remote-exec" {
     inline = [
       "sudo yum install -y python3"
-    ]  
+    ]
   }
   provisioner "local-exec" {
     command = "ansible-playbook -u ${var.ssh_user} -i '${self.public_ip},' --private-key ${var.pki_private_key} playbook.01-infrastructure.yml" 

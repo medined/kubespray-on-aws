@@ -2,14 +2,8 @@
 - hosts: all
   gather_facts: false
 
-  vars:
-    aws_cluster_name: flooper
-    aws_kube_master_num: 1
-    aws_etcd_num: 1
-    aws_kube_worker_num: 1
-    kubespray_version: 2.12.7
-    kubespray_install_dir: /home/centos
-    terraform_version: 0.12.28
+  vars_files:
+    - external_vars.yml
 
   tasks:
 
@@ -265,15 +259,3 @@
           variable "inventory_file" {
             description = "Where to store the generated inventory file"
           }
-
-    - name: Initialize terraform
-      shell: "/home/{{ ansible_user }}/.local/bin/terraform init"
-      args:
-        creates: "/home/{{ ansible_user }}/.terraform.d/checkpoint_cache"
-        chdir: "{{ kubespray_install_dir }}/kubespray-{{ kubespray_version }}/contrib/terraform/aws"
-
-    - name: Apply terraform
-      shell: "/home/{{ ansible_user }}/.local/bin/terraform apply --var-file=credentials.tfvars --auto-approve"
-      args:
-        creates: "{{ kubespray_install_dir }}/kubespray-{{ kubespray_version }}/inventory/hosts"
-        chdir: "{{ kubespray_install_dir }}/kubespray-{{ kubespray_version }}/contrib/terraform/aws"
