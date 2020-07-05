@@ -3,9 +3,24 @@
   gather_facts: false
 
   vars_files:
-    - external_vars.yml
+    - ansible-external-vars.yml
 
   tasks:
+
+    - debug:
+        var: ansible_python_interpreter
+
+    - name: Unarchive kubespray
+      unarchive:
+        src: "https://github.com/kubernetes-sigs/kubespray/archive/v{{ kubespray_version }}.tar.gz"
+        dest: "{{ kubespray_install_dir }}"
+        remote_src: yes
+
+    - name: Install python requirements
+      pip:
+        requirements: ./requirements.txt
+      args:
+        chdir: "{{ kubespray_install_dir }}/kubespray-{{ kubespray_version }}"
 
     - name: Copy PKI PEM file to remote server
       copy:
@@ -20,9 +35,6 @@
         content: |
           eval $(ssh-agent -s)
           ssh-add /home/{{ ansible_user }}/.ssh/kubernetes.pem
-
-#            -e ansible_ssh_private_key_file={{ PKI_PRIVATE_PEM }} \
-
 
     - name: Run cluster playbook to install kubernetes
       shell: |

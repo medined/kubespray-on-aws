@@ -1,0 +1,17 @@
+---
+- hosts: all
+  gather_facts: false
+
+  vars_files:
+    - ansible-external-vars.yml
+
+  tasks:
+
+    - name: jumpbox
+      import_tasks: playbook.01-jumpbox.yml
+
+    # - name: terraform
+    #   import_tasks: playbook.02-terraform.yml
+
+    # - name: kubespray
+    #   import_tasks: playbook.03-kubespray.yml

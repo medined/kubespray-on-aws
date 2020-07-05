@@ -29,15 +29,17 @@ git clone https://github.com/medined/kubespray-on-aws.git
 cd kubespray-on-aws
 ```
 
-## Configure
+## Configuration
 
-Copy the example, then edit the file to enter your specific values.
+### Terraform
+
+Copy the example file, then edit the file to enter your specific values.
 
 ```bash
 cp variables.tf.example variables.tf
 ```
 
-## Python Setup (Local)
+### Python
 
 ```bash
 sudo yum install -y python3 python3-pip
@@ -45,6 +47,14 @@ pip3 install --user pipenv
 python3 -m venv venv
 source venv/bin/activate
 pip install wheel ansible netaddr
+```
+
+## Ansible
+
+Copy the example file, then edit the file to enter your specific values.
+
+```bash
+cp ansible-external-vars.yml.example ansible_external_vars.yml
 ```
 
 ## Terraform
@@ -71,4 +81,11 @@ terraform apply --auto-approve
 **It's during this step that you'll see the hostvars error.**
 
 You can use `ssh-to-server.sh` to SSH to the jump box.
+
+## Manually Deleting VPC
+
+* Delete the load balancer.
+* Terminate all instances.
+* Delete security groups.
+* Delete NAT gateways - these take awhile to delete.
 

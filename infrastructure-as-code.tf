@@ -34,7 +34,7 @@ resource "aws_instance" "centos" {
     ]
   }
   provisioner "local-exec" {
-    command = "ansible-playbook -u ${var.ssh_user} -i '${self.public_ip},' --private-key ${var.pki_private_key} playbook.01-infrastructure.yml" 
+    command = "ansible-playbook -u ${var.ssh_user} -i '${self.public_ip},' --private-key ${var.pki_private_key} playbook.00-main.yml"
     environment = {
       ANSIBLE_HOST_KEY_CHECKING = "False"
     }
