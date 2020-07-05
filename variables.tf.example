@@ -1,0 +1,36 @@
+variable "aws_profile" {
+  default = "ic1"
+}
+
+variable "aws_region" {
+  default = "us-east-1"
+}
+
+variable "instance_type" {
+  default = "t3.medium"
+}
+
+variable "pki_private_key" {
+  default = "/home/medined/Downloads/pem/david-va-oit-cloud-k8s.pem"
+}
+
+variable "pki_public_key" {
+  default = "/home/medined/Downloads/pem/david-va-oit-cloud-k8s.pub"
+}
+
+variable "ssh_cidr_block" {
+  default = "0.0.0.0/0"
+}
+
+# The ssh_user variable is used by both Terraform and Ansible.
+variable "ssh_user" {
+  default = "centos"
+}
+
+variable "subnet_id" {
+  default = "subnet-02c78f939d58e2320"
+}
+
+variable "vpc_id" {
+  default = "vpc-04bdc9b68b19472c3"
+}

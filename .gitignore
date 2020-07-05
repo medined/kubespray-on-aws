@@ -1,0 +1,7 @@
+.terraform
+.vscode
+inventory
+terraform.tfstate
+terraform.tfstate.backup
+variables.tf
+*.log

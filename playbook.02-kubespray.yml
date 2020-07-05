@@ -1,0 +1,40 @@
+---
+- hosts: all
+  gather_facts: false
+
+  vars:
+    kubespray_version: 2.12.7
+    kubespray_install_dir: /home/centos
+
+  tasks:
+
+    - name: Copy PKI PEM file to remote server
+      copy:
+        src: "{{ PKI_PRIVATE_PEM }}"
+        dest: "/home/{{ ansible_user }}/.ssh/kubernetes.pem"
+        mode: 0400
+
+    - name: Add SSH Key At Login
+      become: yes
+      copy:
+        dest: /etc/profile.d/add-ssh-key.sh
+        content: |
+          eval $(ssh-agent -s)
+          ssh-add /home/{{ ansible_user }}/.ssh/kubernetes.pem
+
+#            -e ansible_ssh_private_key_file={{ PKI_PRIVATE_PEM }} \
+
+
+    - name: Run cluster playbook to install kubernetes
+      shell: |
+        python3 \
+          $(which ansible-playbook)
+            --become \
+            --become-user=root \
+            -e ansible_user=centos \
+            -e bootstrap_os=centos \
+            --flush-cache \
+            --inventory ./inventory/hosts \
+            ./cluster.yml
+      args:
+        chdir: "{{ kubespray_install_dir }}/kubespray-{{ kubespray_version }}"

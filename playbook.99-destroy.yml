@@ -1,0 +1,28 @@
+---
+- hosts: all
+  gather_facts: false
+
+  vars:
+    kubespray_version: 2.12.7
+    kubespray_install_dir: /home/centos
+
+  tasks:
+
+    - debug:
+        var: ansible_user
+
+    - name: Destroy terraform
+      shell: "/home/{{ ansible_user }}/.local/bin/terraform destroy --var-file=credentials.tfvars --auto-approve"
+      args:
+        chdir: "{{ kubespray_install_dir }}/kubespray-{{ kubespray_version }}/contrib/terraform/aws"
+        creates: "/home/{{ ansible_user }}/.terraform.d/checkpoint_cache"
+
+    - name: Delete terraform state.
+      file:
+        path: /home/{{ ansible_user }}/.terraform.d
+        state: absent
+
+    - name: Delete Inventory
+      file:
+        path: "{{ kubespray_install_dir }}/kubespray-{{ kubespray_version }}/inventory/hosts"
+        state: absent
